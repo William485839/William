@@ -106,7 +106,7 @@ const decades = [
 
 <style>
   .record-field {
-    background: var(--salmon);
+    background: var(--field);
     padding-block: clamp(1.5rem, 1rem + 2vw, 3rem) var(--section);
   }
 
@@ -129,7 +129,7 @@ const decades = [
     width: 100%;
     margin-bottom: 0.5rem;
     font-weight: 600;
-    color: var(--ink-on-salmon);
+    color: var(--ink-on-field);
   }
   label { position: relative; cursor: pointer; }
   label input {
@@ -142,20 +142,20 @@ const decades = [
   label > span {
     display: inline-block;
     padding: 0.6em 1em;
-    background: var(--slip);
+    background: var(--card);
     color: var(--ink);
     font-weight: 600;
     transition: background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out);
   }
   label:active > span { transform: scale(0.97); }
-  label .n { font-weight: 400; color: var(--ink-on-salmon); margin-left: 0.25em; transition: color 160ms ease; }
+  label .n { font-weight: 400; color: var(--ink-on-field); margin-left: 0.25em; transition: color 160ms ease; }
   input:checked + span { background: var(--ink); color: var(--paper); }
   input:checked + span .n { color: var(--on-ink); }
   input:focus-visible + span { outline: 3px solid var(--blue); outline-offset: 3px; }
   @media (hover: hover) and (pointer: fine) {
-    input:not(:checked) + span:hover { background: var(--paper); }
+    input:not(:checked) + span:hover { background: var(--field-2); }
   }
-  .result { margin-left: auto; color: var(--ink-on-salmon); }
+  .result { margin-left: auto; color: var(--ink-on-field); }
 
   .record {
     display: grid;
@@ -169,7 +169,7 @@ const decades = [
     .record :global(.tombstone.is-large) { grid-column: span 2; }
   }
   .record-empty { padding-block: 3rem; font-size: var(--step-1); }
-  .record-note { margin-top: 2.5rem; color: var(--ink-on-salmon); }
+  .record-note { margin-top: 2.5rem; color: var(--ink-on-field); }
 
   @media (max-width: 40rem) {
     .result { margin-left: 0; }
@@ -184,7 +184,7 @@ const decades = [
       gap: 0.5rem;
       margin-inline: calc(-1 * var(--gutter));
       padding: 0.75rem var(--gutter);
-      background: var(--salmon);
+      background: var(--field);
     }
     fieldset {
       flex-wrap: nowrap;

@@ -25,7 +25,7 @@ npm run build    # makes the finished site in the dist/ folder
 | `src/data/deals.ts` | All 42 deals. Add a new deal here and it shows up on the home page and the deals page. |
 | `src/data/team.ts` | The 12 people and their backgrounds. |
 | `src/data/offices.ts` | The four offices and the partner network. |
-| `src/styles/global.css` | All colours, font sizes and spacing, as named tokens at the top (`--salmon`, `--ink`, ...). |
+| `src/styles/global.css` | All colours, font sizes and spacing, as named tokens at the top (`--field`, `--ink`, ...). |
 | `PRODUCT.md` | What the site is for and who it is for. |
 
 ## Still to do

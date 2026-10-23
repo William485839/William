@@ -133,7 +133,7 @@ const pageTitle = path === '/' ? 'PK Partners: independent M&A advice from Stock
     line-height: 1.1;
   }
   .wordmark-name { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.035em; }
-  .wordmark-with { font-size: 0.9375rem; color: var(--ink-2); }
+  .wordmark-with { font-size: var(--step-small); color: var(--ink-2); }
 
   .site-nav { display: flex; align-items: center; gap: 2rem; }
   .site-nav ul {
@@ -219,7 +219,7 @@ const pageTitle = path === '/' ? 'PK Partners: independent M&A advice from Stock
     gap: 3rem 2rem;
   }
   .footer-city { font-size: var(--step-1); margin-bottom: 0.5rem; }
-  .footer-cols p { color: #dedede; overflow-wrap: anywhere; }
+  .footer-cols p { color: var(--on-ink); overflow-wrap: anywhere; }
   .footer-links {
     display: flex;
     flex-wrap: wrap;
@@ -227,7 +227,7 @@ const pageTitle = path === '/' ? 'PK Partners: independent M&A advice from Stock
     margin: 0;
     padding: 0;
     list-style: none;
-    color: #c4c4c4;
+    color: var(--on-ink-2);
   }
   @media (max-width: 60rem) {
     .footer-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }

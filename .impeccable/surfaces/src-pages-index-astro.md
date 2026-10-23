@@ -28,3 +28,5 @@ Signature interaction: the record page filters the 42 tombstones by role (sold /
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
 
 Unresolved: real logo and team photos (could not be downloaded here); three deal names to confirm; team titles not published.
+
+Build note: the home h1 is "Partner-led M&A advice" instead of the full tagline, because the house rule caps headlines at two lines at every width; the full tagline "European partner-led investment banking advisory firm" opens the lead paragraph directly under it. The Stockholm contact panel uses ink, not salmon, so salmon stays the deal colour.

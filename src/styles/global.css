@@ -14,9 +14,13 @@
   --ink-on-salmon: #4d3b33;  /* secondary text tinted from the salmon */
   --blue: #1d4266;           /* the one accent: links and actions */
   --blue-deep: #142f49;
+  --paper-3: #e4e4e1;        /* hover on a paper-2 panel */
+  --on-ink: #dedede;         /* secondary text on the ink field */
+  --on-ink-2: #c4c4c4;       /* tertiary text on the ink field */
 
   /* Type */
   --font: 'Schibsted Grotesk Variable', 'Helvetica Neue', Arial, sans-serif;
+  --step-small: 0.9375rem;                          /* notes, 15px */
   --step-0: 1.0625rem;                              /* body, 17px */
   --step-1: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem); /* lead text, tombstone names */
   --step-2: clamp(1.75rem, 1.3rem + 1.8vw, 2.75rem);/* section headings */

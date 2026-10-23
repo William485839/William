@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Tombstone from '../components/Tombstone.astro';
-import { deals } from '../data/deals';
+import { deals, roughSekBn } from '../data/deals';
 
 const count = (role: string) => deals.filter((d) => d.role === role).length;
 const roles = [
@@ -57,7 +57,7 @@ const decades = [
       </form>
 
       <div class="record" data-reveal>
-        {deals.map((deal) => <Tombstone deal={deal} />)}
+        {deals.map((deal) => <Tombstone deal={deal} size={(roughSekBn(deal) ?? 0) > 20 ? 'large' : 'normal'} />)}
       </div>
       <p class="record-empty" hidden>No deals match both filters. Try another year or role.</p>
 
@@ -150,7 +150,7 @@ const decades = [
   label:active > span { transform: scale(0.97); }
   label .n { font-weight: 400; color: var(--ink-on-salmon); margin-left: 0.25em; transition: color 160ms ease; }
   input:checked + span { background: var(--ink); color: var(--paper); }
-  input:checked + span .n { color: #cfcac4; }
+  input:checked + span .n { color: var(--on-ink); }
   input:focus-visible + span { outline: 3px solid var(--blue); outline-offset: 3px; }
   @media (hover: hover) and (pointer: fine) {
     input:not(:checked) + span:hover { background: var(--paper); }
@@ -160,14 +160,41 @@ const decades = [
   .record {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+    grid-auto-flow: dense;
     gap: clamp(0.5rem, 0.3rem + 0.6vw, 0.875rem);
   }
   .record :global(.tombstone[hidden]) { display: none; }
+  /* The biggest deals take two slots, so the record has peaks. */
+  @media (min-width: 48rem) {
+    .record :global(.tombstone.is-large) { grid-column: span 2; }
+  }
   .record-empty { padding-block: 3rem; font-size: var(--step-1); }
   .record-note { margin-top: 2.5rem; color: var(--ink-on-salmon); }
 
   @media (max-width: 40rem) {
     .result { margin-left: 0; }
+  }
+  /* On a phone the filters stay at the top while you scroll the deals,
+     each group as one row you can swipe sideways. */
+  @media (max-width: 34rem) {
+    .filters {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      gap: 0.5rem;
+      margin-inline: calc(-1 * var(--gutter));
+      padding: 0.75rem var(--gutter);
+      background: var(--salmon);
+    }
+    fieldset {
+      flex-wrap: nowrap;
+      width: 100%;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    legend { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    label { flex: none; }
+    .result { font-size: var(--step-small); }
   }
 </style>
 

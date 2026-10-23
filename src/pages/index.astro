@@ -24,6 +24,7 @@ const stockholm = offices[0];
         <div class="hero-actions">
           <a class="button" href={tel(stockholm.phone)}>Call {stockholm.phone}</a>
           <a href={`mailto:${stockholm.email}`}>{stockholm.email}</a>
+          <a href="/who-we-are/">Talk to a partner</a>
         </div>
       </div>
       {recent.map((deal) => <Tombstone deal={deal} />)}
@@ -101,7 +102,6 @@ const stockholm = offices[0];
           <li>
             <h3>{o.city}</h3>
             <p class="muted">{o.firm}</p>
-            <p>{o.street}<br />{o.postal}</p>
           </li>
         ))}
       </ul>
@@ -148,7 +148,7 @@ const stockholm = offices[0];
     transition: background-color 200ms ease, transform 160ms var(--ease-out);
   }
   .wall-more:active { transform: scale(0.98); }
-  .wall-more-sub { font-size: 1rem; font-weight: 400; color: #dedede; letter-spacing: 0; }
+  .wall-more-sub { font-size: var(--step-0); font-weight: 400; color: var(--on-ink); letter-spacing: 0; }
   @media (hover: hover) and (pointer: fine) {
     .wall-more:hover { background: var(--blue-deep); color: var(--paper); }
   }
@@ -261,7 +261,7 @@ const stockholm = offices[0];
     list-style: none;
   }
   .office-list li { display: grid; gap: 0.35rem; align-content: start; }
-  .office-list h3 { font-size: var(--step-2); }
+  .office-list h3 { font-size: clamp(2rem, 1rem + 2.6vw, 3.5rem); }
 
   @media (max-width: 60rem) {
     .about, .people-head { grid-template-columns: 1fr; }

@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import Tombstone from '../components/Tombstone.astro';
 import { deals } from '../data/deals';
@@ -24,11 +25,11 @@ const stockholm = offices[0];
         <div class="hero-actions">
           <a class="button" href={tel(stockholm.phone)}>Call {stockholm.phone}</a>
           <a href={`mailto:${stockholm.email}`}>{stockholm.email}</a>
-          <a href="/who-we-are/">Talk to a partner</a>
+          <a href={url("/who-we-are/")}>Talk to a partner</a>
         </div>
       </div>
       {recent.map((deal) => <Tombstone deal={deal} />)}
-      <a class="wall-more" href="/what-we-have-done/">
+      <a class="wall-more" href={url("/what-we-have-done/")}>
         <span>See all {deals.length} deals</span>
         <span class="wall-more-sub">2006 to today</span>
       </a>
@@ -72,7 +73,7 @@ const stockholm = offices[0];
           <li>Capital raising in special situations</li>
           <li>Public listings</li>
         </ul>
-        <p><a href="/what-we-do/">How we work with clients</a></p>
+        <p><a href={url("/what-we-do/")}>How we work with clients</a></p>
       </div>
     </div>
   </section>
@@ -86,7 +87,7 @@ const stockholm = offices[0];
     </div>
     <ul class="roster" data-reveal>
       {team.map((p) => (
-        <li><a href={`/who-we-are/${p.slug}/`}>{p.name}</a></li>
+        <li><a href={url(`/who-we-are/${p.slug}/`)}>{p.name}</a></li>
       ))}
     </ul>
   </section>
@@ -105,7 +106,7 @@ const stockholm = offices[0];
           </li>
         ))}
       </ul>
-      <p><a href="/where-we-are/">Our offices and partners</a></p>
+      <p><a href={url("/where-we-are/")}>Our offices and partners</a></p>
     </div>
   </section>
 </Base>

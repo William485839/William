@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import Tombstone from '../components/Tombstone.astro';
 import { deals } from '../data/deals';
@@ -51,7 +52,7 @@ const publicOffer = deals.find((d) => d.client === 'GHP Specialty Care')!;
         <li>Capital raising in special situations</li>
         <li>Advice on public listing processes</li>
       </ul>
-      <p><a class="button" href="/contact-us/">Talk to a partner</a></p>
+      <p><a class="button" href={url("/contact-us/")}>Talk to a partner</a></p>
     </div>
     <div class="service-proof">
       <Tombstone deal={publicOffer} size="large" />

@@ -6,8 +6,8 @@
     "colorMeta": {
       "paper": { "role": "neutral", "displayName": "Newsprint" },
       "paper-2": { "role": "neutral", "displayName": "Newsprint, one step down" },
-      "salmon": { "role": "tertiary", "displayName": "Financial paper", "tonalRamp": ["#f8e9df", "#f1d6c6", "#4d3b33"] },
-      "slip": { "role": "tertiary", "displayName": "Tombstone slip" },
+      "field": { "role": "tertiary", "displayName": "Deal field", "tonalRamp": ["#ffffff", "#e6ecf1", "#3a4856"] },
+      "card": { "role": "tertiary", "displayName": "Tombstone card" },
       "ink": { "role": "neutral", "displayName": "Ink" },
       "blue": { "role": "primary", "displayName": "Ink blue", "tonalRamp": ["#1d4266", "#142f49"] }
     },
@@ -45,28 +45,28 @@
       "refersTo": "filter-chip",
       "description": "A radio button styled as a square chip, with a count.",
       "html": "<label class=\"ds-chip\"><input type=\"radio\" name=\"r\" checked><span>All deals <b>42</b></span></label> <label class=\"ds-chip\"><input type=\"radio\" name=\"r\"><span>For buyers <b>10</b></span></label>",
-      "css": ".ds-chip { position:relative; font:600 17px 'Schibsted Grotesk Variable', Arial, sans-serif; } .ds-chip input { position:absolute; inset:0; opacity:0; margin:0; } .ds-chip span { display:inline-block; padding:0.6em 1em; background:#f8e9df; color:#161514; } .ds-chip b { font-weight:400; color:#4d3b33; margin-left:0.25em; } .ds-chip input:checked + span { background:#161514; color:#fafafa; } .ds-chip input:checked + span b { color:#cfcac4; }"
+      "css": ".ds-chip { position:relative; font:600 17px 'Schibsted Grotesk Variable', Arial, sans-serif; } .ds-chip input { position:absolute; inset:0; opacity:0; margin:0; } .ds-chip span { display:inline-block; padding:0.6em 1em; background:#ffffff; color:#161514; } .ds-chip b { font-weight:400; color:#3a4856; margin-left:0.25em; } .ds-chip input:checked + span { background:#161514; color:#fafafa; } .ds-chip input:checked + span b { color:#cfcac4; }"
     },
     {
       "name": "Tombstone",
       "kind": "custom",
       "refersTo": "tombstone",
       "description": "One deal, set as a printed announcement.",
-      "html": "<div style=\"background:#f1d6c6;padding:12px\"><article class=\"ds-tomb\"><h3>Clinstorage</h3><p>Sold to RHP</p><p class=\"r\">PK Partners: adviser to seller</p><p class=\"y\">2026</p></article></div>",
-      "css": ".ds-tomb { display:grid; justify-items:center; gap:0.6rem; padding:2rem 1.25rem; background:#f8e9df; text-align:center; font-family:'Schibsted Grotesk Variable', Arial, sans-serif; color:#161514; } .ds-tomb h3 { margin:0; font-size:1.5rem; font-weight:800; letter-spacing:-0.025em; } .ds-tomb p { margin:0; } .ds-tomb .r { margin-top:1.25rem; font-style:italic; font-size:0.9375rem; color:#4d3b33; } .ds-tomb .y { font-weight:700; }"
+      "html": "<div style=\"background:#e6ecf1;padding:12px\"><article class=\"ds-tomb\"><h3>Clinstorage</h3><p>Sold to RHP</p><p class=\"r\">PK Partners: adviser to seller</p><p class=\"y\">2026</p></article></div>",
+      "css": ".ds-tomb { display:grid; justify-items:center; gap:0.6rem; padding:2rem 1.25rem; background:#ffffff; text-align:center; font-family:'Schibsted Grotesk Variable', Arial, sans-serif; color:#161514; } .ds-tomb h3 { margin:0; font-size:1.5rem; font-weight:800; letter-spacing:-0.025em; } .ds-tomb p { margin:0; } .ds-tomb .r { margin-top:1.25rem; font-style:italic; font-size:0.9375rem; color:#3a4856; } .ds-tomb .y { font-weight:700; }"
     }
   ],
   "narrative": {
     "northStar": "The deal announcement page",
     "overview": "The site is built like a financial newspaper page that carries deal announcements. Every deal is a tombstone; the rest stays quiet, exact and flat.",
-    "keyCharacteristics": ["Salmon means deals", "One grotesk, two lines per heading", "Square corners, no lines, no shadows", "Every name as real text"],
+    "keyCharacteristics": ["Blue field means deals", "One grotesk, two lines per heading", "Square corners, no lines, no shadows", "Every name as real text"],
     "rules": [
-      { "name": "Salmon means deals", "body": "Salmon and slip only appear where deals are shown.", "section": "colors" },
+      { "name": "Blue field means deals", "body": "The field and card colours only appear where deals are shown.", "section": "colors" },
       { "name": "Tone steps, not lines", "body": "Surfaces are separated by background tone, never borders or shadows.", "section": "elevation" },
       { "name": "Two lines at most", "body": "Headings fit two lines at every width; long taglines are set as tagline paragraphs.", "section": "typography" },
       { "name": "Centre only the tombstone", "body": "Everything else is left-aligned.", "section": "typography" }
     ],
     "dos": ["Do keep every company name as real text.", "Do add deals in src/data/deals.ts.", "Do use the company's own photos, large and square."],
-    "donts": ["Don't use salmon outside deal regions.", "Don't add borders, shadows, gradients or rounded corners.", "Don't put small labels above headings.", "Don't invent titles, quotes or numbers."]
+    "donts": ["Don't use the blue field outside deal regions.", "Don't add borders, shadows, gradients or rounded corners.", "Don't put small labels above headings.", "Don't invent titles, quotes or numbers."]
   }
 }

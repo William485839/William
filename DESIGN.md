@@ -4,11 +4,11 @@ description: The financial-press announcement page. Every deal is a tombstone.
 colors:
   paper: "#fafafa"
   paper-2: "#eeeeec"
-  salmon: "#f1d6c6"
-  slip: "#f8e9df"
+  field: "#e6ecf1"
+  card: "#ffffff"
   ink: "#161514"
   ink-2: "#4a4542"
-  ink-on-salmon: "#4d3b33"
+  ink-on-field: "#3a4856"
   blue: "#1d4266"
   blue-deep: "#142f49"
   paper-3: "#e4e4e1"
@@ -89,12 +89,12 @@ components:
     rounded: "{rounded.none}"
     padding: "0.85em 1.3em"
   tombstone:
-    backgroundColor: "{colors.slip}"
+    backgroundColor: "{colors.card}"
     textColor: "{colors.ink}"
     rounded: "{rounded.none}"
     padding: "clamp(1.5rem, 1rem + 1.5vw, 2.25rem) 1.25rem"
   filter-chip:
-    backgroundColor: "{colors.slip}"
+    backgroundColor: "{colors.card}"
     textColor: "{colors.ink}"
     rounded: "{rounded.none}"
     padding: "0.6em 1em"
@@ -125,12 +125,12 @@ The rest of the site stays quiet and exact, like a firm that sells discretion: w
 - **On ink** `#dedede` and **On ink 2** `#c4c4c4`: secondary and tertiary text on the ink field.
 
 ### Tertiary: the deal colours
-- **Salmon** `#f1d6c6`: the field behind deals (home wall, deals page, service proof).
-- **Slip** `#f8e9df`: a tombstone, one tone lighter than the salmon.
-- **Ink on salmon** `#4d3b33`: secondary text inside the deal regions.
+- **Field** `#e6ecf1` (a cool, pale blue): the field behind deals (home wall, deals page, service proof).
+- **Card** `#ffffff`: a tombstone, white on the field.
+- **Ink on field** `#3a4856`: secondary text inside the deal regions.
 
 ### Named Rules
-- **Salmon means deals.** Salmon and slip are only used where deals are shown. People, offices and contact panels use paper, paper 2 or ink.
+- **Blue field means deals.** The field and card colours are only used where deals are shown. People, offices and contact panels use paper, paper 2 or ink.
 - **Tone steps, not lines.** Surfaces are separated by a step in background tone. There are no borders, hairlines or outlined boxes.
 
 ## Typography
@@ -157,7 +157,7 @@ One family: **Schibsted Grotesk** (variable, self-hosted via Fontsource), a Nord
 - One frame: max 90rem wide, equal side gutters (16 to 48px), used by the header, every section and the footer.
 - Inner pages open with a split head on wide screens: the page title on the left (5 columns), the tagline and lead on the right (7 columns).
 - Sections are 80 to 192px apart. Neighbouring sections never share a layout.
-- Deal walls are tight grids with a small gap (8 to 14px) on a salmon field. The biggest deals (over about SEK 20bn) take two slots on the deals page.
+- Deal walls are tight grids with a small gap (8 to 14px) on a blue field field. The biggest deals (over about SEK 20bn) take two slots on the deals page.
 - The footer is a designed close: the name at full width, then the four offices.
 
 ## Elevation & Depth
@@ -174,7 +174,7 @@ Square corners on everything: buttons, chips, slips, panels.
 Square, flat, one fill (blue, or paper on a dark panel). Press scales to 0.97 in 160ms.
 
 ### Chips
-The deal filters: slip-coloured chips, ink when selected, with the count beside the label. They are real radio buttons, so they work with the keyboard.
+The deal filters: white chips, ink when selected, with the count beside the label. They are real radio buttons, so they work with the keyboard.
 
 ### Cards / Containers
 Panels in paper 2 for quiet content. Never nested.
@@ -193,7 +193,7 @@ Client name (bold), what happened, the value if public, then after extra space "
 - Do use the company's own photos when they arrive, large and square-cornered.
 
 ### Don't:
-- Don't use salmon outside deal regions.
+- Don't use blue field outside deal regions.
 - Don't add borders, shadows, gradients or rounded corners.
 - Don't put small labels above headings.
 - Don't invent job titles, client quotes or numbers the company has not published.

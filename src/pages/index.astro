@@ -6,83 +6,78 @@ import { deals } from '../data/deals';
 import { team } from '../data/team';
 import { offices, tel } from '../data/offices';
 
-// Recent deals for the wall. Deals with a name still to confirm are left out.
-const recent = deals.filter((d) => !d.confirm).slice(0, 5);
+// The same order as the live site: intro, the four doors, about, team, a few deals, offices.
+const recent = deals.filter((d) => !d.confirm).slice(0, 4);
 const stockholm = offices[0];
+
+const doors = [
+  { href: '/where-we-are/', title: 'Bespoke service meets global reach.', text: 'Offices in Stockholm, Paris, Frankfurt and Milan.' },
+  { href: '/what-we-do/', title: 'In case you need independent advice.', text: 'Sell-side, buy-side and capital raising.' },
+  { href: '/who-we-are/', title: 'International teamwork instead of just a network.', text: `${team.length} people in Stockholm.` },
+  { href: '/what-we-have-done/', title: 'Proven expertise in delivering value to our clients.', text: `${deals.length} deals since 2006.` },
+];
+
+const stats = [
+  { n: '~60', label: 'transactions completed' },
+  { n: '11', label: 'M&A professionals' },
+  { n: '250+', label: 'SEKbn combined value' },
+  { n: '2002', label: 'founded in Stockholm' },
+];
 ---
 
 <Base
   title="Home"
   description="PK Partners is a European partner-led investment banking advisory firm in Stockholm, advising on M&A and corporate finance since 2002 together with CASE CASSIOPEA."
 >
-  <section class="wall-field" aria-labelledby="hero-title">
-    <div class="wrap wall">
-      <div class="hero-slot">
-        <h1 id="hero-title">Partner-led M&amp;A advice</h1>
-        <p class="lead">
-          PK Partners is a European partner-led investment banking advisory firm. Independent advice from Stockholm since 2002, together with CASE CASSIOPEA in Paris, Frankfurt and Milan.
-        </p>
-        <div class="hero-actions">
-          <a class="button" href={tel(stockholm.phone)}>Call {stockholm.phone}</a>
-          <a href={`mailto:${stockholm.email}`}>{stockholm.email}</a>
-          <a href={url("/who-we-are/")}>Talk to a partner</a>
-        </div>
+  <section class="wrap hero" aria-labelledby="hero-title">
+    <h1 id="hero-title">European partner-led investment banking advisory firm</h1>
+    <div class="hero-side">
+      <p class="lead">
+        Independent M&amp;A and corporate finance advice from Stockholm since 2002, in cooperation with <strong>CASE CASSIOPEA</strong> in Paris, Frankfurt and Milan.
+      </p>
+      <div class="hero-actions">
+        <a class="button" href={url('/contact-us/')}>Contact us</a>
+        <a href={tel(stockholm.phone)}>{stockholm.phone}</a>
       </div>
-      {recent.map((deal) => <Tombstone deal={deal} />)}
-      <a class="wall-more" href={url("/what-we-have-done/")}>
-        <span>See all {deals.length} deals</span>
-        <span class="wall-more-sub">2006 to today</span>
-      </a>
     </div>
   </section>
+
+  <nav class="wrap doors" aria-label="Find out more">
+    {doors.map((d, i) => (
+      <a class="door" href={url(d.href)}>
+        <span class="door-n">0{i + 1}</span>
+        <span class="door-title">{d.title}</span>
+        <span class="door-text">{d.text}</span>
+        <span class="door-arrow" aria-hidden="true">→</span>
+      </a>
+    ))}
+  </nav>
 
   <section class="section wrap about" aria-labelledby="about-title" data-reveal>
-    <h2 id="about-title">In case you need independent advice.</h2>
+    <h2 id="about-title">About PK Partners</h2>
     <div class="about-body">
       <p class="statement">
-        About 60 transactions since 2002, worth more than SEK 250bn combined.
+        Our Stockholm office was founded in 2002 and is part of a strong European partnership through CASE CASSIOPEA.
       </p>
       <p>
-        We are part of a strong European partnership through CASE CASSIOPEA, and offer our clients comprehensive industry expertise, a global network of an established banking group, as well as independent advice, to strategically develop and successfully execute M&amp;A and corporate finance transactions.
-      </p>
-      <p class="muted">11 M&amp;A professionals in Stockholm. Founded in 2002.</p>
-    </div>
-  </section>
-
-  <section class="section wrap services" aria-labelledby="services-title">
-    <div class="services-head" data-reveal>
-      <h2 id="services-title">Fully committed by your side.</h2>
-      <p>
-        Whether sell-side or buy-side, we provide discreet, bespoke and independent advice on mergers, acquisitions, divestitures, capital raisings and other corporate finance transactions, for corporates, entrepreneurs and financial investors.
+        We offer our clients comprehensive industry expertise, the global network of an established banking group, and independent advice, to strategically develop and successfully execute M&amp;A and corporate finance transactions.
       </p>
     </div>
-    <div class="services-lists" data-reveal>
-      <div>
-        <h3>M&amp;A and strategic advisory</h3>
-        <ul>
-          <li>Sell-side and buy-side mandates</li>
-          <li>LBOs and MBOs</li>
-          <li>Public offers</li>
-          <li>Preparing a business for strategic actions</li>
-          <li>Fairness opinions for management and supervisory boards</li>
-        </ul>
-      </div>
-      <div>
-        <h3>Capital raising advisory</h3>
-        <ul>
-          <li>Capital raising in special situations</li>
-          <li>Public listings</li>
-        </ul>
-        <p><a href={url("/what-we-do/")}>How we work with clients</a></p>
-      </div>
-    </div>
+    <dl class="stats">
+      {stats.map((s) => (
+        <div>
+          <dt>{s.label}</dt>
+          <dd>{s.n}</dd>
+        </div>
+      ))}
+    </dl>
   </section>
 
   <section class="section wrap people" aria-labelledby="people-title">
     <div class="people-head" data-reveal>
-      <h2 id="people-title">International teamwork instead of just a network.</h2>
+      <h2 id="people-title">The people behind every deal</h2>
       <p>
-        Our strength is a team culture shared across the offices, a strong track record and long experience as M&amp;A advisers. Senior partners have more than 25 years of experience each and work on every deal themselves.
+        Senior partners have more than 25 years of experience each and work on the execution of every deal themselves.
       </p>
     </div>
     <ul class="roster" data-reveal>
@@ -92,96 +87,102 @@ const stockholm = offices[0];
     </ul>
   </section>
 
-  <section class="offices-field" aria-labelledby="offices-title">
+  <section class="deals-field" aria-labelledby="deals-title">
     <div class="wrap">
-      <h2 id="offices-title">Bespoke service meets global reach.</h2>
-      <p class="offices-intro">
-        Most of our transactions are cross-border. We focus on the Nordics and Northern Europe, with partners across Western Europe and the Americas.
-      </p>
-      <ul class="office-list" data-reveal>
-        {offices.map((o) => (
-          <li>
-            <h3>{o.city}</h3>
-            <p class="muted">{o.firm}</p>
-          </li>
-        ))}
-      </ul>
-      <p><a href={url("/where-we-are/")}>Our offices and partners</a></p>
+      <div class="deals-head" data-reveal>
+        <h2 id="deals-title">Recent deals</h2>
+        <a href={url('/what-we-have-done/')}>See all {deals.length} deals</a>
+      </div>
+      <div class="deals" data-reveal>
+        {recent.map((deal) => <Tombstone deal={deal} />)}
+      </div>
     </div>
+  </section>
+
+  <section class="section wrap offices" aria-labelledby="offices-title" data-reveal>
+    <h2 id="offices-title">Bespoke service meets global reach.</h2>
+    <p class="offices-intro">
+      Most of our transactions are cross-border. We focus on the Nordics and Northern Europe, with partners across Western Europe and the Americas.
+    </p>
+    <ul class="office-list">
+      {offices.map((o) => (
+        <li>
+          <h3>{o.city}</h3>
+          <p class="muted">{o.firm}</p>
+        </li>
+      ))}
+    </ul>
+    <p><a href={url('/where-we-are/')}>Our offices and partners</a></p>
   </section>
 </Base>
 
 <style>
-  /* The announcement wall: the first screen. */
-  .wall-field { background: var(--salmon); padding-block: var(--gutter); }
-  .wall {
+  /* Hero: the company's own line, big and calm, the way the live site opens. */
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+    gap: 2rem var(--gutter);
+    align-items: end;
+    padding-block: clamp(3.5rem, 2rem + 7vw, 9rem) clamp(2.5rem, 2rem + 3vw, 5rem);
+  }
+  .hero h1 {
+    font-size: clamp(2.6rem, 1.2rem + 5.2vw, 6.5rem);
+    letter-spacing: -0.045em;
+    line-height: 0.98;
+    max-width: 14ch;
+  }
+  .hero-side { display: grid; gap: 1.75rem; }
+  .hero-side strong { font-weight: 700; color: var(--ink); }
+  .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; font-weight: 600; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero h1, .hero-side, .door { animation: rise 600ms var(--ease-out) backwards; }
+    .hero-side { animation-delay: 120ms; }
+    .door:nth-child(1) { animation-delay: 200ms; }
+    .door:nth-child(2) { animation-delay: 260ms; }
+    .door:nth-child(3) { animation-delay: 320ms; }
+    .door:nth-child(4) { animation-delay: 380ms; }
+  }
+  @keyframes rise { from { opacity: 0; transform: translateY(16px); } }
+
+  /* The four doors: one per part of the site, like the live site's teasers. */
+  .doors {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: clamp(0.5rem, 0.3rem + 0.6vw, 0.875rem);
   }
-  .hero-slot {
-    grid-column: span 3;
-    grid-row: span 2;
+  .door {
+    position: relative;
     display: grid;
-    align-content: end;
-    gap: 1.75rem;
-    padding: clamp(1.75rem, 1rem + 3vw, 4rem);
-    background: var(--paper);
-    min-height: min(36rem, 72vh);
-  }
-  .hero-slot h1 { font-size: clamp(2.75rem, 1.4rem + 5vw, 6rem); letter-spacing: -0.04em; }
-  .hero-slot .lead { max-width: 46ch; }
-  .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.75rem; font-weight: 600; }
-
-  .wall-more {
-    display: grid;
-    align-content: center;
-    justify-items: center;
-    gap: 0.25rem;
-    padding: 1.5rem;
-    background: var(--ink);
-    color: var(--paper);
+    grid-template-rows: auto 1fr auto;
+    gap: 1rem;
+    min-height: 15rem;
+    padding: clamp(1.25rem, 1rem + 1vw, 2rem);
+    background: var(--paper-2);
+    color: var(--ink);
     text-decoration: none;
-    font-size: var(--step-1);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    text-align: center;
     transition: background-color 200ms ease, transform 160ms var(--ease-out);
   }
-  .wall-more:active { transform: scale(0.98); }
-  .wall-more-sub { font-size: var(--step-0); font-weight: 400; color: var(--on-ink); letter-spacing: 0; }
+  .door:active { transform: scale(0.98); }
+  .door-n { font-weight: 600; color: var(--ink-2); font-size: var(--step-small); }
+  .door-title { font-size: var(--step-1); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; text-wrap: balance; }
+  .door-text { color: var(--ink-2); padding-right: 2rem; }
+  .door-arrow {
+    position: absolute;
+    right: clamp(1.25rem, 1rem + 1vw, 2rem);
+    bottom: clamp(1.25rem, 1rem + 1vw, 2rem);
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--blue);
+    transition: transform 200ms var(--ease-out);
+  }
   @media (hover: hover) and (pointer: fine) {
-    .wall-more:hover { background: var(--blue-deep); color: var(--paper); }
+    .door:hover { background: var(--blue); color: var(--paper); }
+    .door:hover .door-n, .door:hover .door-text { color: var(--on-ink); }
+    .door:hover .door-arrow { color: var(--paper); transform: translateX(4px); }
   }
 
-  /* One authored moment: the wall is set, slip by slip, when the page opens. */
-  @media (prefers-reduced-motion: no-preference) {
-    .wall > * {
-      animation: set-slip 520ms var(--ease-out) backwards;
-    }
-    .wall > :nth-child(2) { animation-delay: 90ms; }
-    .wall > :nth-child(3) { animation-delay: 150ms; }
-    .wall > :nth-child(4) { animation-delay: 210ms; }
-    .wall > :nth-child(5) { animation-delay: 270ms; }
-    .wall > :nth-child(6) { animation-delay: 330ms; }
-    .wall > :nth-child(7) { animation-delay: 390ms; }
-  }
-  @keyframes set-slip {
-    from { opacity: 0; transform: translateY(14px); }
-  }
-
-  @media (max-width: 68rem) {
-    .wall { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .hero-slot { grid-column: 1 / -1; grid-row: auto; min-height: 0; }
-  }
-  @media (max-width: 34rem) {
-    .wall { grid-template-columns: 1fr; }
-    .wall :global(.tombstone) { min-height: 0; }
-    /* On a phone, two recent deals are enough before the link to all of them. */
-    .wall :global(.tombstone:nth-of-type(n + 3)) { display: none; }
-  }
-
-  /* About: heading on the left, the statement on the right. */
+  /* About: heading left, text right, then the four numbers in a row. */
   .about {
     display: grid;
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
@@ -194,28 +195,27 @@ const stockholm = offices[0];
     line-height: 1.25;
     letter-spacing: -0.02em;
     font-weight: 500;
-    max-width: 30ch;
   }
-
-  /* Services: a wide heading, then two lists side by side. */
-  .services { display: grid; gap: clamp(2.5rem, 2rem + 2vw, 4rem); }
-  .services-head { display: grid; gap: 1.5rem; }
-  .services-lists {
+  .stats {
+    grid-column: 1 / -1;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: var(--gutter);
+    margin: clamp(1.5rem, 1rem + 2vw, 3.5rem) 0 0;
   }
-  .services-lists > div {
-    display: grid;
-    align-content: start;
-    gap: 1.25rem;
-    padding: clamp(1.5rem, 1rem + 2vw, 2.75rem);
-    background: var(--paper-2);
+  .stats div { display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: 0.5rem; }
+  .stats dd {
+    margin: 0;
+    font-size: clamp(2.75rem, 1.5rem + 4vw, 5.5rem);
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    line-height: 0.95;
+    color: var(--blue);
   }
-  .services-lists ul { margin: 0; padding-left: 1.1em; display: grid; gap: 0.5rem; }
+  .stats dt { color: var(--ink-2); }
 
   /* People: the names themselves are the picture. */
-  .people { display: grid; gap: clamp(2.5rem, 2rem + 2vw, 4rem); }
+  .people { display: grid; gap: clamp(2rem, 1.5rem + 2vw, 3.5rem); }
   .people-head {
     display: grid;
     grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
@@ -244,19 +244,34 @@ const stockholm = offices[0];
     .roster a:hover { color: var(--blue); }
   }
 
-  /* Offices: a field of quieter tone carries the four cities. */
-  .offices-field {
-    background: var(--paper-2);
+  /* Deals: just four, on the deal field. */
+  .deals-field {
+    background: var(--field);
     margin-top: var(--section);
-    padding-block: clamp(4rem, 3rem + 4vw, 8rem);
+    padding-block: clamp(3.5rem, 2.5rem + 4vw, 7rem);
   }
-  .offices-field .wrap { display: grid; gap: 1.75rem; }
+  .deals-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem 2rem;
+    margin-bottom: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
+    font-weight: 600;
+  }
+  .deals {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(0.5rem, 0.3rem + 0.6vw, 0.875rem);
+  }
+
+  /* Offices. */
+  .offices { display: grid; gap: 1.75rem; }
   .offices-intro { font-size: var(--step-1); line-height: 1.4; }
   .office-list {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: var(--gutter);
-    row-gap: 3rem;
+    gap: 3rem var(--gutter);
     margin: 1.5rem 0 0.5rem;
     padding: 0;
     list-style: none;
@@ -264,13 +279,18 @@ const stockholm = offices[0];
   .office-list li { display: grid; gap: 0.35rem; align-content: start; }
   .office-list h3 { font-size: clamp(2rem, 1rem + 2.6vw, 3.5rem); }
 
-  @media (max-width: 60rem) {
-    .about, .people-head { grid-template-columns: 1fr; }
-    .services-lists { grid-template-columns: 1fr; }
-    .roster { columns: 2; }
-    .office-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @media (max-width: 68rem) {
+    .doors, .deals { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
-  @media (max-width: 30rem) {
+  @media (max-width: 60rem) {
+    .hero, .about, .people-head { grid-template-columns: 1fr; }
+    .stats, .office-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .roster { columns: 2; }
+  }
+  @media (max-width: 34rem) {
+    .doors, .deals { grid-template-columns: 1fr; }
+    .door { min-height: 0; }
     .roster { columns: 1; }
+    .deals :global(.tombstone) { min-height: 0; }
   }
 </style>

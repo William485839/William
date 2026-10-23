@@ -7,11 +7,12 @@
   /* Colour */
   --paper: #fafafa;          /* the newspaper page */
   --paper-2: #eeeeec;        /* one tone step down, for quiet panels */
-  --salmon: #f1d6c6;         /* financial-paper field behind the deals */
-  --slip: #f8e9df;           /* a tombstone, one tone lighter than the field */
+  --field: #e6ecf1;          /* cool pale blue field behind the deals */
+  --field-2: #d5dfe8;        /* hover on the field */
+  --card: #ffffff;           /* a tombstone, white on the field */
   --ink: #161514;
   --ink-2: #4a4542;          /* secondary text, still 7:1 on paper */
-  --ink-on-salmon: #4d3b33;  /* secondary text tinted from the salmon */
+  --ink-on-field: #3a4856;   /* secondary text tinted from the field */
   --blue: #1d4266;           /* the one accent: links and actions */
   --blue-deep: #142f49;
   --paper-3: #e4e4e1;        /* hover on a paper-2 panel */

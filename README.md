@@ -2,6 +2,8 @@
 
 A practice rebuild of [pkpartners.se](https://www.pkpartners.se/), made by William to learn web design. It is not the real company site.
 
+Live version: https://william485839.github.io/William/ (published by GitHub Pages every time `main` changes, see `.github/workflows/deploy.yml`).
+
 ## Run it on your computer
 
 You need [Node.js](https://nodejs.org/) 22.12 or newer.

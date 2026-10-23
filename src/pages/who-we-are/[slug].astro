@@ -1,4 +1,5 @@
 ---
+import { url } from '../../lib/url';
 // One page per person. Astro makes a page for every entry in team.ts.
 import Base from '../../layouts/Base.astro';
 import { team, type Person } from '../../data/team';
@@ -19,7 +20,7 @@ const others = team.filter((p) => p.slug !== person.slug);
       <a class="button" href={`mailto:${person.email}`}>Email {person.name.split(' ')[0]}</a>
       <span class="muted">{person.email}</span>
     </p>
-    <p><a href="/who-we-are/">Back to the whole team</a></p>
+    <p><a href={url("/who-we-are/")}>Back to the whole team</a></p>
   </div>
 
   <section class="wrap facts" data-reveal aria-label={`About ${person.name}`}>
@@ -41,7 +42,7 @@ const others = team.filter((p) => p.slug !== person.slug);
     <h2 id="others-title" class="others-title">More of the team</h2>
     <ul class="others" data-reveal>
       {others.map((p) => (
-        <li><a href={`/who-we-are/${p.slug}/`}>{p.name}</a></li>
+        <li><a href={url(`/who-we-are/${p.slug}/`)}>{p.name}</a></li>
       ))}
     </ul>
   </section>

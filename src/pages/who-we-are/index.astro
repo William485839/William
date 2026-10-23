@@ -1,4 +1,5 @@
 ---
+import { url } from '../../lib/url';
 import Base from '../../layouts/Base.astro';
 import { team } from '../../data/team';
 import { offices } from '../../data/offices';
@@ -38,7 +39,7 @@ import { offices } from '../../data/offices';
     <ul class="team" data-reveal>
       {team.map((p) => (
         <li>
-          <a href={`/who-we-are/${p.slug}/`}>
+          <a href={url(`/who-we-are/${p.slug}/`)}>
             <span class="name">{p.name}</span>
             <span class="was">{p.note ?? `Previously ${p.background[0]}`}</span>
           </a>

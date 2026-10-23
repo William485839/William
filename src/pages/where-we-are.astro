@@ -1,0 +1,94 @@
+---
+import Base from '../layouts/Base.astro';
+import { offices, network, tel } from '../data/offices';
+---
+
+<Base
+  title="Where we are"
+  description="PK Partners in Stockholm, with CASE CASSIOPEA in Paris, Frankfurt and Milan, ABN AMRO for Benelux and MAP Alliance for Latin America and Spain."
+>
+  <div class="wrap page-head" data-reveal>
+    <h1>Where we are</h1>
+    <p class="tagline">Bespoke service meets global reach.</p>
+    <p class="lead">
+      We have an international outlook, and most of our transactions are cross-border. Our focus is the Nordics and Northern Europe, and through our partners we also cover Western Continental Europe, North America and South America.
+    </p>
+  </div>
+
+  <section class="wrap" aria-labelledby="offices-title">
+    <h2 id="offices-title" class="block-title">Offices</h2>
+    <ul class="offices" data-reveal>
+      {offices.map((o) => (
+        <li class:list={{ home: o.city === 'Stockholm' }}>
+          <h3>{o.city}</h3>
+          <p class="firm">{o.firm}, {o.country}</p>
+          <p>{o.street}<br />{o.postal}</p>
+          <p><a href={tel(o.phone)}>{o.phone}</a><br /><a href={`mailto:${o.email}`}>{o.email}</a></p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="section wrap" aria-labelledby="network-title">
+    <h2 id="network-title" class="block-title">Our international network</h2>
+    <ul class="network" data-reveal>
+      {network.map((n) => (
+        <li>
+          <p class="region">{n.region}</p>
+          <h3>{n.href ? <a href={n.href}>{n.partner}</a> : n.partner}</h3>
+          <p>{n.text}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .block-title { margin-bottom: clamp(1.5rem, 1rem + 1.5vw, 2.5rem); }
+
+  .offices {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2rem clamp(0.5rem, 0.3rem + 0.6vw, 0.875rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .offices li {
+    display: grid;
+    align-content: start;
+    gap: 0.75rem;
+    padding: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
+    background: var(--paper-2);
+  }
+  .offices li.home { background: var(--ink); color: var(--paper); }
+  .offices li.home a { color: var(--paper); }
+  .offices h3 { font-size: var(--step-2); }
+  .offices .firm { font-weight: 600; }
+  .offices p { overflow-wrap: anywhere; }
+
+  .network {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .network li {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 3fr) minmax(0, 5fr);
+    gap: 1rem var(--gutter);
+    align-items: baseline;
+    padding-block: 1.75rem;
+  }
+  .network li:nth-child(odd) { background: var(--paper-2); margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); }
+  .region { font-size: var(--step-1); font-weight: 600; letter-spacing: -0.01em; }
+
+  @media (max-width: 64rem) {
+    .offices { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .network li { grid-template-columns: 1fr; gap: 0.5rem; }
+  }
+  @media (max-width: 34rem) {
+    .offices { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Privacy policy" description="How PK Partners AB handles personal data you send us.">
+  <div class="wrap page-head" data-reveal>
+    <h1>Privacy policy</h1>
+    <p class="lead">PK Partners AB is responsible for the personal data you share with us.</p>
+  </div>
+
+  <section class="wrap policy" aria-label="Policy">
+    <h2>What we collect</h2>
+    <p>The information you give us when you contact us, such as your name and contact details.</p>
+    <h2>Why</h2>
+    <p>To contact you, and to start or keep a business relationship with you. We process the data based on your consent.</p>
+    <h2>How long</h2>
+    <p>We keep your data only as long as we need it for those purposes.</p>
+    <h2>Your rights</h2>
+    <p>You can ask to see the data we hold about you, and ask us to correct or delete it at any time.</p>
+    <h2>Contact</h2>
+    <p><a href="tel:+4686781630">+46 8 678 1630</a> or <a href="mailto:info@pkpartners.se">info@pkpartners.se</a></p>
+  </section>
+</Base>
+
+<style>
+  .policy { display: grid; gap: 0.75rem; padding-bottom: var(--section); max-width: 52rem; margin-inline: 0; }
+  .policy h2 { font-size: var(--step-1); margin-top: 2rem; }
+  .policy h2:first-child { margin-top: 0; }
+</style>

@@ -1,0 +1,238 @@
+---
+// The frame every page sits in: head tags, the menu and the footer.
+import '../styles/global.css';
+import { offices } from '../data/offices';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const path = Astro.url.pathname;
+
+const nav = [
+  { href: '/who-we-are/', label: 'Who we are' },
+  { href: '/what-we-do/', label: 'What we do' },
+  { href: '/where-we-are/', label: 'Where we are' },
+  { href: '/what-we-have-done/', label: 'What we have done' },
+  { href: '/join-us/', label: 'Join us' },
+];
+
+const isCurrent = (href: string) => path.startsWith(href);
+const pageTitle = path === '/' ? 'PK Partners: independent M&A advice from Stockholm' : `${title} | PK Partners`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#fbfbf9" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="site-header wrap">
+      <a class="wordmark" href="/" aria-label="PK Partners, home">
+        <span class="wordmark-name">PK Partners</span>
+        <span class="wordmark-with">with CASE CASSIOPEA</span>
+      </a>
+
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+      </button>
+
+      <noscript><style>.site-nav { display: flex !important; }</style></noscript>
+      <nav id="site-nav" class="site-nav" aria-label="Main">
+        <ul>
+          {nav.map((item) => (
+            <li>
+              <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
+            </li>
+          ))}
+        </ul>
+        <a class="button nav-action" href="/contact-us/" aria-current={isCurrent('/contact-us/') ? 'page' : undefined}>
+          Contact us
+        </a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <p class="footer-name" aria-hidden="true">PK Partners</p>
+        <div class="footer-cols">
+          {offices.map((o) => (
+            <div>
+              <h2 class="footer-city">{o.city}</h2>
+              <p>
+                {o.street}<br />{o.postal}<br />
+                <a href={`tel:${o.phone.replace(/[^+\d]/g, '')}`}>{o.phone}</a><br />
+                <a href={`mailto:${o.email}`}>{o.email}</a>
+              </p>
+            </div>
+          ))}
+        </div>
+        <ul class="footer-links">
+          <li><a href="https://www.linkedin.com/company/pk-partners-ab">PK Partners on LinkedIn</a></li>
+          <li><a href="/privacy-policy/">Privacy policy</a></li>
+          <li>PK Partners AB, Stockholm, since 2002</li>
+        </ul>
+      </div>
+    </footer>
+
+    <script>
+      // Reveal each marked section once, when it scrolls into view.
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add('is-in');
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { rootMargin: '0px 0px -10% 0px' },
+      );
+      document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
+
+      // Small screens: open and close the menu with the Menu button.
+      const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+      const header = document.querySelector('.site-header');
+      toggle?.addEventListener('click', () => {
+        const open = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!open));
+        toggle.textContent = open ? 'Menu' : 'Close';
+        header?.classList.toggle('is-open', !open);
+      });
+    </script>
+  </body>
+</html>
+
+<style>
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding-block: 1.25rem;
+  }
+
+  .wordmark {
+    display: grid;
+    color: var(--ink);
+    text-decoration: none;
+    line-height: 1.1;
+  }
+  .wordmark-name { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.035em; }
+  .wordmark-with { font-size: var(--step-small); color: var(--ink-2); }
+
+  .site-nav { display: flex; align-items: center; gap: 2rem; }
+  .site-nav ul {
+    display: flex;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .site-nav ul a {
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 500;
+    padding-block: 0.4em;
+    position: relative;
+  }
+  .site-nav ul a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 200ms var(--ease-out);
+  }
+  .site-nav ul a[aria-current='page']::after { transform: scaleX(1); }
+  @media (hover: hover) and (pointer: fine) {
+    .site-nav ul a:hover { color: var(--ink); }
+    .site-nav ul a:hover::after { transform: scaleX(1); }
+  }
+
+  .menu-toggle { display: none; }
+
+  @media (max-width: 68rem) {
+    .site-header { flex-wrap: wrap; }
+    .menu-toggle {
+      display: block;
+      font: inherit;
+      font-weight: 600;
+      color: var(--ink);
+      background: var(--paper-2);
+      border: 0;
+      padding: 0.6em 1em;
+      cursor: pointer;
+      transition: transform 160ms var(--ease-out);
+    }
+    .menu-toggle:active { transform: scale(0.97); }
+    .site-nav {
+      display: none;
+      flex-basis: 100%;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1.25rem;
+      padding-block: 0.5rem 1rem;
+    }
+    .site-header.is-open .site-nav { display: flex; }
+    .site-nav ul { flex-direction: column; gap: 0; }
+    .site-nav ul a { display: block; font-size: 1.375rem; padding-block: 0.45em; }
+    .nav-action { justify-content: center; }
+  }
+
+  .site-footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding-block: clamp(4rem, 3rem + 4vw, 7rem) 2.5rem;
+  }
+  .site-footer a { color: var(--paper); }
+  .footer-inner { display: grid; gap: 3rem; }
+  .footer-name {
+    max-width: none;
+    font-size: clamp(3.5rem, 1rem + 12vw, 13rem);
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    line-height: 0.85;
+    margin-left: -0.05em;
+  }
+  .footer-cols {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 3rem 2rem;
+  }
+  .footer-city { font-size: var(--step-1); margin-bottom: 0.5rem; }
+  .footer-cols p { color: var(--on-ink); overflow-wrap: anywhere; }
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--on-ink-2);
+  }
+  @media (max-width: 60rem) {
+    .footer-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 30rem) {
+    .footer-cols { grid-template-columns: 1fr; }
+  }
+</style>

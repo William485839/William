@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-23T23:10:00Z",
+  "title": "Design System: PK Partners (practice redesign)",
+  "extensions": {
+    "colorMeta": {
+      "paper": { "role": "neutral", "displayName": "Newsprint" },
+      "paper-2": { "role": "neutral", "displayName": "Newsprint, one step down" },
+      "salmon": { "role": "tertiary", "displayName": "Financial paper", "tonalRamp": ["#f8e9df", "#f1d6c6", "#4d3b33"] },
+      "slip": { "role": "tertiary", "displayName": "Tombstone slip" },
+      "ink": { "role": "neutral", "displayName": "Ink" },
+      "blue": { "role": "primary", "displayName": "Ink blue", "tonalRamp": ["#1d4266", "#142f49"] }
+    },
+    "typographyMeta": {
+      "hero": { "displayName": "Hero", "purpose": "Home page h1 only." },
+      "display": { "displayName": "Display", "purpose": "Page titles." },
+      "tagline": { "displayName": "Tagline", "purpose": "The company's own taglines, set as paragraphs." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.23, 1, 0.32, 1)", "purpose": "Every UI transition: presses, underlines, reveals, the filter reflow." },
+      { "name": "press", "value": "transform 160ms ease-out, scale 0.97", "purpose": "Feedback on buttons, chips and cards." },
+      { "name": "set-slip", "value": "520ms ease-out, 14px rise, 60-90ms stagger", "purpose": "The home wall is set slip by slip once on load." },
+      { "name": "reveal", "value": "600ms ease-out, 24px rise, 80ms stagger", "purpose": "Sections rise once as they scroll into view; visible without JavaScript." },
+      { "name": "filter-reflow", "value": "View Transitions, 260ms", "purpose": "The deal wall reflows when a filter changes." }
+    ],
+    "breakpoints": [
+      { "name": "phone", "value": "34rem" },
+      { "name": "tablet", "value": "60rem" },
+      { "name": "menu", "value": "68rem" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one action in a view.",
+      "html": "<a class=\"ds-btn\" href=\"#\">Call +46 8 678 1630</a>",
+      "css": ".ds-btn { display:inline-flex; padding:0.85em 1.3em; background:#1d4266; color:#fafafa; font:600 17px 'Schibsted Grotesk Variable', Arial, sans-serif; text-decoration:none; border:0; border-radius:0; transition:background-color 160ms ease, transform 160ms cubic-bezier(0.23,1,0.32,1); } .ds-btn:hover { background:#142f49; } .ds-btn:active { transform:scale(0.97); }"
+    },
+    {
+      "name": "Filter chip",
+      "kind": "chip",
+      "refersTo": "filter-chip",
+      "description": "A radio button styled as a square chip, with a count.",
+      "html": "<label class=\"ds-chip\"><input type=\"radio\" name=\"r\" checked><span>All deals <b>42</b></span></label> <label class=\"ds-chip\"><input type=\"radio\" name=\"r\"><span>For buyers <b>10</b></span></label>",
+      "css": ".ds-chip { position:relative; font:600 17px 'Schibsted Grotesk Variable', Arial, sans-serif; } .ds-chip input { position:absolute; inset:0; opacity:0; margin:0; } .ds-chip span { display:inline-block; padding:0.6em 1em; background:#f8e9df; color:#161514; } .ds-chip b { font-weight:400; color:#4d3b33; margin-left:0.25em; } .ds-chip input:checked + span { background:#161514; color:#fafafa; } .ds-chip input:checked + span b { color:#cfcac4; }"
+    },
+    {
+      "name": "Tombstone",
+      "kind": "custom",
+      "refersTo": "tombstone",
+      "description": "One deal, set as a printed announcement.",
+      "html": "<div style=\"background:#f1d6c6;padding:12px\"><article class=\"ds-tomb\"><h3>Clinstorage</h3><p>Sold to RHP</p><p class=\"r\">PK Partners: adviser to seller</p><p class=\"y\">2026</p></article></div>",
+      "css": ".ds-tomb { display:grid; justify-items:center; gap:0.6rem; padding:2rem 1.25rem; background:#f8e9df; text-align:center; font-family:'Schibsted Grotesk Variable', Arial, sans-serif; color:#161514; } .ds-tomb h3 { margin:0; font-size:1.5rem; font-weight:800; letter-spacing:-0.025em; } .ds-tomb p { margin:0; } .ds-tomb .r { margin-top:1.25rem; font-style:italic; font-size:0.9375rem; color:#4d3b33; } .ds-tomb .y { font-weight:700; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The deal announcement page",
+    "overview": "The site is built like a financial newspaper page that carries deal announcements. Every deal is a tombstone; the rest stays quiet, exact and flat.",
+    "keyCharacteristics": ["Salmon means deals", "One grotesk, two lines per heading", "Square corners, no lines, no shadows", "Every name as real text"],
+    "rules": [
+      { "name": "Salmon means deals", "body": "Salmon and slip only appear where deals are shown.", "section": "colors" },
+      { "name": "Tone steps, not lines", "body": "Surfaces are separated by background tone, never borders or shadows.", "section": "elevation" },
+      { "name": "Two lines at most", "body": "Headings fit two lines at every width; long taglines are set as tagline paragraphs.", "section": "typography" },
+      { "name": "Centre only the tombstone", "body": "Everything else is left-aligned.", "section": "typography" }
+    ],
+    "dos": ["Do keep every company name as real text.", "Do add deals in src/data/deals.ts.", "Do use the company's own photos, large and square."],
+    "donts": ["Don't use salmon outside deal regions.", "Don't add borders, shadows, gradients or rounded corners.", "Don't put small labels above headings.", "Don't invent titles, quotes or numbers."]
+  }
+}

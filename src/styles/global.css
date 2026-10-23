@@ -1,0 +1,173 @@
+/* PK Partners: the financial-press announcement page.
+   All colours and sizes live here as tokens. Components only use the tokens. */
+
+@import '@fontsource-variable/schibsted-grotesk';
+
+:root {
+  /* Colour */
+  --paper: #fafafa;          /* the newspaper page */
+  --paper-2: #eeeeec;        /* one tone step down, for quiet panels */
+  --salmon: #f1d6c6;         /* financial-paper field behind the deals */
+  --slip: #f8e9df;           /* a tombstone, one tone lighter than the field */
+  --ink: #161514;
+  --ink-2: #4a4542;          /* secondary text, still 7:1 on paper */
+  --ink-on-salmon: #4d3b33;  /* secondary text tinted from the salmon */
+  --blue: #1d4266;           /* the one accent: links and actions */
+  --blue-deep: #142f49;
+  --paper-3: #e4e4e1;        /* hover on a paper-2 panel */
+  --on-ink: #dedede;         /* secondary text on the ink field */
+  --on-ink-2: #c4c4c4;       /* tertiary text on the ink field */
+
+  /* Type */
+  --font: 'Schibsted Grotesk Variable', 'Helvetica Neue', Arial, sans-serif;
+  --step-small: 0.9375rem;                          /* notes, 15px */
+  --step-0: 1.0625rem;                              /* body, 17px */
+  --step-1: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem); /* lead text, tombstone names */
+  --step-2: clamp(1.75rem, 1.3rem + 1.8vw, 2.75rem);/* section headings */
+  --step-3: clamp(2.5rem, 1.4rem + 4.6vw, 5.5rem);  /* page title */
+
+  /* Space */
+  --gutter: clamp(1rem, 0.5rem + 2.5vw, 3rem);
+  --section: clamp(5rem, 3rem + 8vw, 12rem);
+  --max: 90rem;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scrollbar-color: var(--ink-2) var(--paper-2);
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: var(--step-0);
+  line-height: 1.55;
+  font-optical-sizing: auto;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: var(--blue); color: var(--paper); }
+
+h1, h2, h3 {
+  margin: 0;
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+h1 { font-size: var(--step-3); }
+h2 { font-size: var(--step-2); }
+h3 { font-size: var(--step-1); letter-spacing: -0.015em; line-height: 1.15; }
+
+p { margin: 0; max-width: 65ch; text-wrap: pretty; }
+
+a {
+  color: var(--blue);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.2em;
+  transition: color 160ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  a:hover { color: var(--blue-deep); text-decoration-thickness: 0.12em; }
+}
+
+:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+
+img { max-width: 100%; display: block; }
+
+.wrap {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.lead { font-size: var(--step-1); line-height: 1.4; letter-spacing: -0.01em; }
+.tagline {
+  font-size: clamp(1.375rem, 1rem + 1.2vw, 2.125rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+  max-width: 30ch;
+}
+
+/* Sections rise into place once as they scroll into view.
+   Without JavaScript (no .js class) everything is simply visible. */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal] > * {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out);
+  }
+  .js [data-reveal].is-in > * { opacity: 1; transform: none; }
+  .js [data-reveal].is-in > :nth-child(2) { transition-delay: 80ms; }
+  .js [data-reveal].is-in > :nth-child(3) { transition-delay: 160ms; }
+  .js [data-reveal].is-in > :nth-child(4) { transition-delay: 240ms; }
+}
+.muted { color: var(--ink-2); }
+
+/* The one button shape: square, flat, one fill. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.85em 1.3em;
+  background: var(--blue);
+  color: var(--paper);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  border: 0;
+  cursor: pointer;
+  transition: background-color 160ms ease, transform 160ms var(--ease-out);
+}
+.button:active { transform: scale(0.97); }
+@media (hover: hover) and (pointer: fine) {
+  .button:hover { background: var(--blue-deep); color: var(--paper); }
+}
+
+.skip {
+  position: absolute;
+  left: var(--gutter);
+  top: -4rem;
+  padding: 0.6em 1em;
+  background: var(--ink);
+  color: var(--paper);
+  z-index: 10;
+}
+.skip:focus { top: 0.75rem; }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* Page heading block used on every inner page */
+.page-head {
+  padding-block: clamp(3rem, 2rem + 5vw, 7rem) clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
+  display: grid;
+  gap: 1.5rem;
+  align-items: start;
+}
+/* Wide screens: the page title on the left, what the page is about on the right. */
+@media (min-width: 64rem) {
+  .page-head {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    column-gap: var(--gutter);
+  }
+  .page-head > h1 { grid-column: 1; grid-row: 1 / span 3; }
+  .page-head > :not(h1) { grid-column: 2; max-width: none; }
+}
+
+.section { padding-block: var(--section) 0; }
+.section:last-child { padding-bottom: var(--section); }

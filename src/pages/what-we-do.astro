@@ -1,0 +1,103 @@
+---
+import Base from '../layouts/Base.astro';
+import Tombstone from '../components/Tombstone.astro';
+import { deals } from '../data/deals';
+
+// One real example next to each kind of work.
+const sellSide = deals.find((d) => d.client === 'BillerudKorsnäs')!;
+const buySide = deals.find((d) => d.client === 'Alfa Laval' && d.role === 'buyer')!;
+const publicOffer = deals.find((d) => d.client === 'GHP Specialty Care')!;
+
+---
+
+<Base
+  title="What we do"
+  description="Partner-led M&A, strategic and capital raising advice from PK Partners: sell-side and buy-side mandates, LBOs and MBOs, public offers and fairness opinions."
+>
+  <div class="wrap page-head" data-reveal>
+    <h1>What we do</h1>
+    <p class="tagline">Whether sell-side or buy-side, fully committed by your side.</p>
+    <p class="lead">
+      Commitment to our clients and their strategic transactions is the essence of what we do. Our advice is tailored, confidential, partner-led and independent of any other business interest.
+    </p>
+  </div>
+
+  <section class="wrap values" aria-label="What we stand for">
+    <p class="statement">We act in our clients’ best interests, with integrity, respect, the full attention of our senior partners, and complete confidentiality.</p>
+  </section>
+
+  <section class="section wrap service" aria-labelledby="ma-title" data-reveal>
+    <div class="service-text" data-reveal>
+      <h2 id="ma-title">M&amp;A and strategic advisory</h2>
+      <ul>
+        <li>Sell-side mandates</li>
+        <li>Buy-side mandates</li>
+        <li>Managing LBOs and MBOs</li>
+        <li>Managing public offers</li>
+        <li>Preparing a business for strategic actions</li>
+        <li>Fairness opinions for management or supervisory boards</li>
+      </ul>
+    </div>
+    <div class="service-proof">
+      <Tombstone deal={sellSide} />
+      <Tombstone deal={buySide} />
+    </div>
+  </section>
+
+  <section class="section wrap service is-flipped" aria-labelledby="cap-title" data-reveal>
+    <div class="service-text" data-reveal>
+      <h2 id="cap-title">Capital raising advisory</h2>
+      <ul>
+        <li>Capital raising in special situations</li>
+        <li>Advice on public listing processes</li>
+      </ul>
+      <p><a class="button" href="/contact-us/">Talk to a partner</a></p>
+    </div>
+    <div class="service-proof">
+      <Tombstone deal={publicOffer} size="large" />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .values { padding-block: clamp(1rem, 0.5rem + 2vw, 3rem) 0; }
+  .statement {
+    font-size: clamp(1.375rem, 1rem + 1.2vw, 2.125rem);
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    font-weight: 500;
+    max-width: 34ch;
+  }
+
+  .service {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 2.5rem var(--gutter);
+    align-items: center;
+  }
+  .service.is-flipped { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+  .service.is-flipped .service-text { order: 2; }
+  .service-text { display: grid; gap: 1.5rem; align-content: start; }
+  .service-text ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.25rem;
+    font-size: var(--step-1);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .service-proof {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: clamp(0.5rem, 0.3rem + 0.6vw, 0.875rem);
+    padding: clamp(0.5rem, 0.3rem + 0.6vw, 0.875rem);
+    background: var(--salmon);
+  }
+
+  @media (max-width: 60rem) {
+    .service, .service.is-flipped { grid-template-columns: 1fr; }
+    .service.is-flipped .service-text { order: 0; }
+  }
+</style>

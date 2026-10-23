@@ -1,0 +1,179 @@
+---
+import Base from '../layouts/Base.astro';
+import Tombstone from '../components/Tombstone.astro';
+import { deals } from '../data/deals';
+
+const count = (role: string) => deals.filter((d) => d.role === role).length;
+const roles = [
+  { value: 'all', label: 'All deals', n: deals.length },
+  { value: 'seller', label: 'For sellers', n: count('seller') },
+  { value: 'buyer', label: 'For buyers', n: count('buyer') },
+  { value: 'other', label: 'Other advice', n: count('company') + count('strategic') },
+];
+const decades = [
+  { value: 'all', label: 'Any year' },
+  { value: '2020', label: '2020s' },
+  { value: '2010', label: '2010s' },
+  { value: '2000', label: '2000s' },
+];
+---
+
+<Base
+  title="What we have done"
+  description="42 M&A and corporate finance transactions PK Partners has advised on since 2006, from sell-side mandates to public offers."
+>
+  <div class="wrap page-head" data-reveal>
+    <h1>What we have done</h1>
+    <p class="tagline">Proven expertise in delivering value to our clients.</p>
+    <p class="lead">
+      Since 2002 we have advised on about 60 M&amp;A and corporate finance transactions across industries, deal types and geographies. Here are {deals.length} of them.
+    </p>
+  </div>
+
+  <section class="record-field" aria-labelledby="record-title">
+    <div class="wrap">
+      <h2 id="record-title" class="visually-hidden">Transactions</h2>
+
+      <form class="filters" aria-label="Filter the deals" data-reveal>
+        <fieldset>
+          <legend>Our role</legend>
+          {roles.map((r, i) => (
+            <label>
+              <input type="radio" name="role" value={r.value} checked={i === 0} />
+              <span>{r.label} <span class="n">{r.n}</span></span>
+            </label>
+          ))}
+        </fieldset>
+        <fieldset>
+          <legend>When</legend>
+          {decades.map((d, i) => (
+            <label>
+              <input type="radio" name="decade" value={d.value} checked={i === 0} />
+              <span>{d.label}</span>
+            </label>
+          ))}
+        </fieldset>
+        <p class="result" aria-live="polite"><span data-shown>{deals.length}</span> deals shown</p>
+      </form>
+
+      <div class="record" data-reveal>
+        {deals.map((deal) => <Tombstone deal={deal} />)}
+      </div>
+      <p class="record-empty" hidden>No deals match both filters. Try another year or role.</p>
+
+      <p class="record-note">
+        More transactions by our partners across Europe are listed on the <a href="https://casecassiopea.com/what-we-have-done/">CASE CASSIOPEA website</a>.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('.filters')!;
+  const slips = [...document.querySelectorAll<HTMLElement>('.record .tombstone')];
+  const shown = document.querySelector('[data-shown]')!;
+  const empty = document.querySelector<HTMLElement>('.record-empty')!;
+
+  function apply() {
+    const data = new FormData(form);
+    const role = data.get('role');
+    const decade = data.get('decade');
+    let n = 0;
+    for (const el of slips) {
+      const r = el.dataset.role;
+      const roleOk = role === 'all' || r === role || (role === 'other' && (r === 'company' || r === 'strategic'));
+      const decadeOk = decade === 'all' || el.dataset.decade === decade;
+      const show = roleOk && decadeOk;
+      el.hidden = !show;
+      if (show) n++;
+    }
+    shown.textContent = String(n);
+    empty.hidden = n > 0;
+  }
+
+  form.addEventListener('change', () => {
+    // Let the wall reflow with a short move where the browser supports it.
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (document.startViewTransition && !reduce) {
+      slips.forEach((el, i) => (el.style.viewTransitionName = `slip-${i}`));
+      const t = document.startViewTransition(apply);
+      t.finished.finally(() => slips.forEach((el) => (el.style.viewTransitionName = '')));
+    } else {
+      apply();
+    }
+  });
+</script>
+
+<style>
+  .record-field {
+    background: var(--salmon);
+    padding-block: clamp(1.5rem, 1rem + 2vw, 3rem) var(--section);
+  }
+
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: 1.25rem 2.5rem;
+    margin-bottom: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
+  }
+  fieldset {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  legend {
+    width: 100%;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--ink-on-salmon);
+  }
+  label { position: relative; cursor: pointer; }
+  label input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    margin: 0;
+    cursor: pointer;
+  }
+  label > span {
+    display: inline-block;
+    padding: 0.6em 1em;
+    background: var(--slip);
+    color: var(--ink);
+    font-weight: 600;
+    transition: background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out);
+  }
+  label:active > span { transform: scale(0.97); }
+  label .n { font-weight: 400; color: var(--ink-on-salmon); margin-left: 0.25em; transition: color 160ms ease; }
+  input:checked + span { background: var(--ink); color: var(--paper); }
+  input:checked + span .n { color: #cfcac4; }
+  input:focus-visible + span { outline: 3px solid var(--blue); outline-offset: 3px; }
+  @media (hover: hover) and (pointer: fine) {
+    input:not(:checked) + span:hover { background: var(--paper); }
+  }
+  .result { margin-left: auto; color: var(--ink-on-salmon); }
+
+  .record {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+    gap: clamp(0.5rem, 0.3rem + 0.6vw, 0.875rem);
+  }
+  .record :global(.tombstone[hidden]) { display: none; }
+  .record-empty { padding-block: 3rem; font-size: var(--step-1); }
+  .record-note { margin-top: 2.5rem; color: var(--ink-on-salmon); }
+
+  @media (max-width: 40rem) {
+    .result { margin-left: 0; }
+  }
+</style>
+
+<style is:global>
+  ::view-transition-group(*) {
+    animation-duration: 260ms;
+    animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+</style>

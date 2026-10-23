@@ -1,0 +1,92 @@
+---
+import Base from '../../layouts/Base.astro';
+import { team } from '../../data/team';
+import { offices } from '../../data/offices';
+---
+
+<Base
+  title="Who we are"
+  description="The PK Partners team in Stockholm: backgrounds in investment banking and management consulting, part of a European partnership through CASE CASSIOPEA."
+>
+  <div class="wrap page-head" data-reveal>
+    <h1>Who we are</h1>
+    <p class="tagline">International teamwork instead of just a network.</p>
+    <p class="lead">
+      We are a Stockholm team with backgrounds in investment banking and management consulting, and part of a European partnership through CASE CASSIOPEA.
+    </p>
+  </div>
+
+  <section class="wrap" aria-labelledby="story-title">
+    <div class="story" data-reveal>
+    <h2 id="story-title">Twenty years of working together</h2>
+    <div class="story-body">
+      <p>
+        The senior partners of PK Partners and CASE CASSIOPEA have worked together for about twenty years. That shared history is where our culture and our teamwork across the offices come from.
+      </p>
+      <p>
+        Each senior partner has more than 25 years of experience and works on the execution of every deal. We are committed to long-term relationships with our clients.
+      </p>
+      <p class="muted">
+        Offices in {offices.map((o) => o.city).join(', ').replace(/, ([^,]*)$/, ' and $1')}.
+      </p>
+    </div>
+    </div>
+  </section>
+
+  <section class="section wrap" aria-labelledby="team-title">
+    <h2 id="team-title" class="team-title">The team in Stockholm</h2>
+    <ul class="team" data-reveal>
+      {team.map((p) => (
+        <li>
+          <a href={`/who-we-are/${p.slug}/`}>
+            <span class="name">{p.name}</span>
+            <span class="was">{p.note ?? `Previously ${p.background[0]}`}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .story {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 1.5rem var(--gutter);
+    padding-block: clamp(2.5rem, 2rem + 3vw, 5rem);
+    background: var(--paper-2);
+    padding-inline: clamp(1.5rem, 1rem + 3vw, 4rem);
+  }
+  .story-body { display: grid; gap: 1.25rem; }
+
+  .team-title { margin-bottom: clamp(1.5rem, 1rem + 1.5vw, 2.5rem); }
+  .team {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+    gap: clamp(0.5rem, 0.3rem + 0.6vw, 0.875rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .team a {
+    display: grid;
+    gap: 0.5rem;
+    align-content: end;
+    min-height: 10rem;
+    padding: 1.5rem;
+    background: var(--salmon);
+    color: var(--ink);
+    text-decoration: none;
+    transition: background-color 200ms ease, transform 160ms var(--ease-out);
+  }
+  .team a:active { transform: scale(0.98); }
+  @media (hover: hover) and (pointer: fine) {
+    .team a:hover { background: var(--slip); }
+  }
+  .name { font-size: var(--step-1); font-weight: 800; letter-spacing: -0.025em; line-height: 1.15; }
+  .was { color: var(--ink-on-salmon); line-height: 1.4; }
+
+  @media (max-width: 60rem) {
+    .story { grid-template-columns: 1fr; }
+  }
+</style>

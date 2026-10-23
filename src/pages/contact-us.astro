@@ -1,0 +1,103 @@
+---
+import Base from '../layouts/Base.astro';
+import { offices, tel } from '../data/offices';
+import { team } from '../data/team';
+
+const [stockholm, ...partners] = offices;
+---
+
+<Base
+  title="Contact us"
+  description="Contact PK Partners at Birger Jarlsgatan 13, Stockholm: +46 8 678 1630, info@pkpartners.se. Offices with CASE CASSIOPEA in Paris, Frankfurt and Milan."
+>
+  <div class="wrap page-head" data-reveal>
+    <h1>Contact us</h1>
+    <p class="tagline">Call or write to us in Stockholm, or to one of our partner offices in Europe.</p>
+  </div>
+
+  <section class="wrap main-office" aria-labelledby="sthlm-title" data-reveal>
+    <div class="sthlm" data-reveal>
+      <h2 id="sthlm-title">Stockholm</h2>
+      <p class="lead">{stockholm.street}<br />{stockholm.postal}, {stockholm.country}</p>
+      <div class="sthlm-actions">
+        <a class="button" href={tel(stockholm.phone)}>Call {stockholm.phone}</a>
+        <a class="button is-quiet" href={`mailto:${stockholm.email}`}>Email {stockholm.email}</a>
+      </div>
+    </div>
+    <div class="people" data-reveal>
+      <h2>Or write to one of us directly</h2>
+      <ul>
+        {team.map((p) => (
+          <li><a href={`mailto:${p.email}`}>{p.name}</a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section wrap" aria-labelledby="europe-title">
+    <h2 id="europe-title" class="europe-title">CASE CASSIOPEA offices</h2>
+    <ul class="europe" data-reveal>
+      {partners.map((o) => (
+        <li>
+          <h3>{o.city}</h3>
+          <p>{o.street}<br />{o.postal}, {o.country}</p>
+          <p><a href={tel(o.phone)}>{o.phone}</a><br /><a href={`mailto:${o.email}`}>{o.email}</a></p>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .main-office {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(0.5rem, 0.3rem + 0.6vw, 0.875rem);
+  }
+  .sthlm {
+    display: grid;
+    align-content: end;
+    gap: 1.5rem;
+    padding: clamp(1.75rem, 1rem + 3vw, 4rem);
+    background: var(--salmon);
+    min-height: 24rem;
+  }
+  .sthlm h2 { font-size: var(--step-3); }
+  .sthlm-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .button.is-quiet { background: var(--paper); color: var(--ink); }
+  @media (hover: hover) and (pointer: fine) {
+    .button.is-quiet:hover { background: var(--slip); color: var(--ink); }
+  }
+
+  .people {
+    display: grid;
+    align-content: start;
+    gap: 1.25rem;
+    padding: clamp(1.75rem, 1rem + 2vw, 3rem);
+    background: var(--paper-2);
+  }
+  .people h2 { font-size: var(--step-1); }
+  .people ul { margin: 0; padding: 0; list-style: none; columns: 2; column-gap: 1.5rem; }
+  .people li { padding-block: 0.2rem; }
+
+  .europe-title { margin-bottom: 1.5rem; }
+  .europe {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--gutter);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .europe li { display: grid; gap: 0.6rem; align-content: start; }
+  .europe h3 { font-size: var(--step-2); }
+  .europe p { overflow-wrap: anywhere; }
+
+  @media (max-width: 60rem) {
+    .main-office { grid-template-columns: 1fr; }
+    .sthlm { min-height: 0; }
+  }
+  @media (max-width: 40rem) {
+    .europe { grid-template-columns: 1fr; }
+  }
+</style>

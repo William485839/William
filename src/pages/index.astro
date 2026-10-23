@@ -1,0 +1,275 @@
+---
+import Base from '../layouts/Base.astro';
+import Tombstone from '../components/Tombstone.astro';
+import { deals } from '../data/deals';
+import { team } from '../data/team';
+import { offices, tel } from '../data/offices';
+
+// Recent deals for the wall. Deals with a name still to confirm are left out.
+const recent = deals.filter((d) => !d.confirm).slice(0, 5);
+const stockholm = offices[0];
+---
+
+<Base
+  title="Home"
+  description="PK Partners is a European partner-led investment banking advisory firm in Stockholm, advising on M&A and corporate finance since 2002 together with CASE CASSIOPEA."
+>
+  <section class="wall-field" aria-labelledby="hero-title">
+    <div class="wrap wall">
+      <div class="hero-slot">
+        <h1 id="hero-title">Partner-led M&amp;A advice</h1>
+        <p class="lead">
+          PK Partners is a European partner-led investment banking advisory firm. Independent advice from Stockholm since 2002, together with CASE CASSIOPEA in Paris, Frankfurt and Milan.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href={tel(stockholm.phone)}>Call {stockholm.phone}</a>
+          <a href={`mailto:${stockholm.email}`}>{stockholm.email}</a>
+        </div>
+      </div>
+      {recent.map((deal) => <Tombstone deal={deal} />)}
+      <a class="wall-more" href="/what-we-have-done/">
+        <span>See all {deals.length} deals</span>
+        <span class="wall-more-sub">2006 to today</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="section wrap about" aria-labelledby="about-title" data-reveal>
+    <h2 id="about-title">In case you need independent advice.</h2>
+    <div class="about-body">
+      <p class="statement">
+        About 60 transactions since 2002, worth more than SEK 250bn combined.
+      </p>
+      <p>
+        We are part of a strong European partnership through CASE CASSIOPEA, and offer our clients comprehensive industry expertise, a global network of an established banking group, as well as independent advice, to strategically develop and successfully execute M&amp;A and corporate finance transactions.
+      </p>
+      <p class="muted">11 M&amp;A professionals in Stockholm. Founded in 2002.</p>
+    </div>
+  </section>
+
+  <section class="section wrap services" aria-labelledby="services-title">
+    <div class="services-head" data-reveal>
+      <h2 id="services-title">Fully committed by your side.</h2>
+      <p>
+        Whether sell-side or buy-side, we provide discreet, bespoke and independent advice on mergers, acquisitions, divestitures, capital raisings and other corporate finance transactions, for corporates, entrepreneurs and financial investors.
+      </p>
+    </div>
+    <div class="services-lists" data-reveal>
+      <div>
+        <h3>M&amp;A and strategic advisory</h3>
+        <ul>
+          <li>Sell-side and buy-side mandates</li>
+          <li>LBOs and MBOs</li>
+          <li>Public offers</li>
+          <li>Preparing a business for strategic actions</li>
+          <li>Fairness opinions for management and supervisory boards</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Capital raising advisory</h3>
+        <ul>
+          <li>Capital raising in special situations</li>
+          <li>Public listings</li>
+        </ul>
+        <p><a href="/what-we-do/">How we work with clients</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap people" aria-labelledby="people-title">
+    <div class="people-head" data-reveal>
+      <h2 id="people-title">International teamwork instead of just a network.</h2>
+      <p>
+        Our strength is a team culture shared across the offices, a strong track record and long experience as M&amp;A advisers. Senior partners have more than 25 years of experience each and work on every deal themselves.
+      </p>
+    </div>
+    <ul class="roster" data-reveal>
+      {team.map((p) => (
+        <li><a href={`/who-we-are/${p.slug}/`}>{p.name}</a></li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="offices-field" aria-labelledby="offices-title">
+    <div class="wrap">
+      <h2 id="offices-title">Bespoke service meets global reach.</h2>
+      <p class="offices-intro">
+        Most of our transactions are cross-border. We focus on the Nordics and Northern Europe, with partners across Western Europe and the Americas.
+      </p>
+      <ul class="office-list" data-reveal>
+        {offices.map((o) => (
+          <li>
+            <h3>{o.city}</h3>
+            <p class="muted">{o.firm}</p>
+            <p>{o.street}<br />{o.postal}</p>
+          </li>
+        ))}
+      </ul>
+      <p><a href="/where-we-are/">Our offices and partners</a></p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* The announcement wall: the first screen. */
+  .wall-field { background: var(--salmon); padding-block: var(--gutter); }
+  .wall {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(0.5rem, 0.3rem + 0.6vw, 0.875rem);
+  }
+  .hero-slot {
+    grid-column: span 3;
+    grid-row: span 2;
+    display: grid;
+    align-content: end;
+    gap: 1.75rem;
+    padding: clamp(1.75rem, 1rem + 3vw, 4rem);
+    background: var(--paper);
+    min-height: min(36rem, 72vh);
+  }
+  .hero-slot h1 { font-size: clamp(2.75rem, 1.4rem + 5vw, 6rem); letter-spacing: -0.04em; }
+  .hero-slot .lead { max-width: 46ch; }
+  .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.75rem; font-weight: 600; }
+
+  .wall-more {
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: 0.25rem;
+    padding: 1.5rem;
+    background: var(--ink);
+    color: var(--paper);
+    text-decoration: none;
+    font-size: var(--step-1);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-align: center;
+    transition: background-color 200ms ease, transform 160ms var(--ease-out);
+  }
+  .wall-more:active { transform: scale(0.98); }
+  .wall-more-sub { font-size: 1rem; font-weight: 400; color: #dedede; letter-spacing: 0; }
+  @media (hover: hover) and (pointer: fine) {
+    .wall-more:hover { background: var(--blue-deep); color: var(--paper); }
+  }
+
+  /* One authored moment: the wall is set, slip by slip, when the page opens. */
+  @media (prefers-reduced-motion: no-preference) {
+    .wall > * {
+      animation: set-slip 520ms var(--ease-out) backwards;
+    }
+    .wall > :nth-child(2) { animation-delay: 90ms; }
+    .wall > :nth-child(3) { animation-delay: 150ms; }
+    .wall > :nth-child(4) { animation-delay: 210ms; }
+    .wall > :nth-child(5) { animation-delay: 270ms; }
+    .wall > :nth-child(6) { animation-delay: 330ms; }
+    .wall > :nth-child(7) { animation-delay: 390ms; }
+  }
+  @keyframes set-slip {
+    from { opacity: 0; transform: translateY(14px); }
+  }
+
+  @media (max-width: 68rem) {
+    .wall { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .hero-slot { grid-column: 1 / -1; grid-row: auto; min-height: 0; }
+  }
+  @media (max-width: 34rem) {
+    .wall { grid-template-columns: 1fr; }
+    .wall :global(.tombstone) { min-height: 0; }
+    /* On a phone, two recent deals are enough before the link to all of them. */
+    .wall :global(.tombstone:nth-of-type(n + 3)) { display: none; }
+  }
+
+  /* About: heading on the left, the statement on the right. */
+  .about {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 2rem var(--gutter);
+    align-items: start;
+  }
+  .about-body { display: grid; gap: 1.5rem; }
+  .statement {
+    font-size: clamp(1.375rem, 1rem + 1.2vw, 2.125rem);
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    font-weight: 500;
+    max-width: 30ch;
+  }
+
+  /* Services: a wide heading, then two lists side by side. */
+  .services { display: grid; gap: clamp(2.5rem, 2rem + 2vw, 4rem); }
+  .services-head { display: grid; gap: 1.5rem; }
+  .services-lists {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--gutter);
+  }
+  .services-lists > div {
+    display: grid;
+    align-content: start;
+    gap: 1.25rem;
+    padding: clamp(1.5rem, 1rem + 2vw, 2.75rem);
+    background: var(--paper-2);
+  }
+  .services-lists ul { margin: 0; padding-left: 1.1em; display: grid; gap: 0.5rem; }
+
+  /* People: the names themselves are the picture. */
+  .people { display: grid; gap: clamp(2.5rem, 2rem + 2vw, 4rem); }
+  .people-head {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 1.5rem var(--gutter);
+    align-items: end;
+  }
+  .roster {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    columns: 3;
+    column-gap: var(--gutter);
+  }
+  .roster a {
+    display: block;
+    padding-block: 0.2em;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: clamp(1.5rem, 1rem + 1.8vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    transition: color 160ms ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .roster a:hover { color: var(--blue); }
+  }
+
+  /* Offices: a field of quieter tone carries the four cities. */
+  .offices-field {
+    background: var(--paper-2);
+    margin-top: var(--section);
+    padding-block: clamp(4rem, 3rem + 4vw, 8rem);
+  }
+  .offices-field .wrap { display: grid; gap: 1.75rem; }
+  .offices-intro { font-size: var(--step-1); line-height: 1.4; }
+  .office-list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--gutter);
+    row-gap: 3rem;
+    margin: 1.5rem 0 0.5rem;
+    padding: 0;
+    list-style: none;
+  }
+  .office-list li { display: grid; gap: 0.35rem; align-content: start; }
+  .office-list h3 { font-size: var(--step-2); }
+
+  @media (max-width: 60rem) {
+    .about, .people-head { grid-template-columns: 1fr; }
+    .services-lists { grid-template-columns: 1fr; }
+    .roster { columns: 2; }
+    .office-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 30rem) {
+    .roster { columns: 1; }
+  }
+</style>

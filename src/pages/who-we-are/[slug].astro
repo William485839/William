@@ -1,0 +1,93 @@
+---
+// One page per person. Astro makes a page for every entry in team.ts.
+import Base from '../../layouts/Base.astro';
+import { team, type Person } from '../../data/team';
+
+export function getStaticPaths() {
+  return team.map((person) => ({ params: { slug: person.slug }, props: { person } }));
+}
+
+const { person } = Astro.props as { person: Person };
+const others = team.filter((p) => p.slug !== person.slug);
+---
+
+<Base title={person.name} description={`${person.name} at PK Partners, Stockholm.`}>
+  <div class="wrap page-head" data-reveal>
+    <h1>{person.name}</h1>
+    <p class="tagline">{person.note ?? 'Part of the PK Partners team in Stockholm.'}</p>
+    <p class="contact">
+      <a class="button" href={`mailto:${person.email}`}>Email {person.name.split(' ')[0]}</a>
+      <span class="muted">{person.email}</span>
+    </p>
+    <p><a href="/who-we-are/">Back to the whole team</a></p>
+  </div>
+
+  <section class="wrap facts" data-reveal aria-label={`About ${person.name}`}>
+    <div>
+      <h2>Before PK Partners</h2>
+      <ul>
+        {person.background.map((b) => <li>{b}</li>)}
+      </ul>
+    </div>
+    <div>
+      <h2>Education</h2>
+      <ul>
+        {person.education.map((e) => <li>{e}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section wrap" aria-labelledby="others-title">
+    <h2 id="others-title" class="others-title">More of the team</h2>
+    <ul class="others" data-reveal>
+      {others.map((p) => (
+        <li><a href={`/who-we-are/${p.slug}/`}>{p.name}</a></li>
+      ))}
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .contact { display: flex; justify-content: flex-start; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; max-width: none; }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--gutter);
+  }
+  .facts > div {
+    display: grid;
+    align-content: start;
+    gap: 1.25rem;
+    padding: clamp(1.5rem, 1rem + 2vw, 2.75rem);
+    background: var(--paper-2);
+  }
+  .facts h2 { font-size: var(--step-1); }
+  .facts ul { margin: 0; padding-left: 1.1em; display: grid; gap: 0.6rem; }
+
+  .others-title { margin-bottom: 1.5rem; }
+  .others {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    columns: 3;
+    column-gap: var(--gutter);
+  }
+  .others a {
+    display: block;
+    padding-block: 0.2em;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: var(--step-1);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .others a:hover { color: var(--blue); }
+  }
+
+  @media (max-width: 50rem) {
+    .facts { grid-template-columns: 1fr; }
+    .others { columns: 2; }
+  }
+</style>

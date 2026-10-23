@@ -1,0 +1,60 @@
+---
+import Base from '../layouts/Base.astro';
+
+const subject = encodeURIComponent('Application to PK Partners');
+const body = encodeURIComponent('Hello PK Partners,\n\nI would like to apply for a position / an internship (period: ...).\n\nAttached: cover letter, CV and references.\n\n');
+---
+
+<Base
+  title="Join us"
+  description="Work at PK Partners in Stockholm: a fast-paced, entrepreneurial investment banking team. Apply with a cover letter, CV and references."
+>
+  <div class="wrap page-head" data-reveal>
+    <h1>Join us</h1>
+    <p class="tagline">If you share our passion for excellence, add your value to our team.</p>
+  </div>
+
+  <section class="wrap join" aria-labelledby="work-title" data-reveal>
+    <div class="join-text" data-reveal>
+      <h2 id="work-title">Working at PK Partners</h2>
+      <p>
+        We are a young team of experienced investment bankers in a fast-paced and entrepreneurial setting. Senior professionals lead the team and work hands-on in every stage of a client relationship. The work is demanding, and it is rewarding for your career.
+      </p>
+      <p>We are always looking for talented people for our Stockholm office.</p>
+    </div>
+
+    <div class="apply" data-reveal>
+      <h2>How to apply</h2>
+      <ol>
+        <li>Write your application in English.</li>
+        <li>Include a cover letter, your CV and references.</li>
+        <li>For an internship, say which period you would like.</li>
+      </ol>
+      <p><a class="button" href={`mailto:info@pkpartners.se?subject=${subject}&body=${body}`}>Email your application</a></p>
+      <p class="muted">Applications go to info@pkpartners.se.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .join {
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: 2.5rem var(--gutter);
+    align-items: start;
+    padding-bottom: var(--section);
+  }
+  .join-text { display: grid; gap: 1.25rem; }
+  .apply {
+    display: grid;
+    gap: 1.25rem;
+    padding: clamp(1.75rem, 1rem + 2.5vw, 3.5rem);
+    background: var(--salmon);
+  }
+  .apply ol { margin: 0; padding-left: 1.3em; display: grid; gap: 0.5rem; font-size: var(--step-1); line-height: 1.35; }
+  .apply .muted { color: var(--ink-on-salmon); }
+
+  @media (max-width: 56rem) {
+    .join { grid-template-columns: 1fr; }
+  }
+</style>

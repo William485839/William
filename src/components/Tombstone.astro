@@ -1,0 +1,67 @@
+---
+// One deal, set as a formal announcement ("tombstone").
+import { type Deal, roleLabel, formatValue } from '../data/deals';
+
+interface Props {
+  deal: Deal;
+  size?: 'normal' | 'large';
+}
+
+const { deal, size = 'normal' } = Astro.props;
+const value = formatValue(deal);
+---
+
+<article
+  class:list={['tombstone', `is-${size}`]}
+  data-role={deal.role}
+  data-decade={Math.floor(deal.year / 10) * 10}
+>
+  <h3 class="t-client">{deal.client}</h3>
+  <p class="t-text">{deal.text}</p>
+  {value && <p class="t-value">{value}</p>}
+  <p class="t-role">PK Partners: {roleLabel[deal.role].toLowerCase()}</p>
+  <p class="t-year">{deal.year}{deal.pending && <span class="t-pending">, pending</span>}</p>
+  {deal.confirm && <p class="t-confirm">Name to be confirmed</p>}
+</article>
+
+<style>
+  .tombstone {
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: 0.6rem;
+    padding: clamp(1.5rem, 1rem + 1.5vw, 2.25rem) 1.25rem;
+    background: var(--slip);
+    text-align: center;
+    min-height: 15rem;
+  }
+  .tombstone p { max-width: 30ch; }
+
+  .t-year { font-weight: 600; color: var(--ink-on-salmon); }
+  .t-pending { font-weight: 400; }
+  .t-client {
+    font-size: var(--step-1);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+  }
+  .t-text { color: var(--ink); line-height: 1.4; }
+  .t-value {
+    font-variant-numeric: tabular-nums;
+    font-size: var(--step-1);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .t-role {
+    margin-top: 0.6rem;
+    font-size: 0.9375rem;
+    color: var(--ink-on-salmon);
+  }
+  .t-confirm {
+    font-size: 0.9375rem;
+    color: var(--ink-on-salmon);
+    font-style: italic;
+  }
+
+  .is-large .t-client { font-size: var(--step-2); }
+  .is-large .t-value { font-size: var(--step-2); }
+</style>
